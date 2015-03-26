@@ -20,6 +20,12 @@
     "url": "https://github.com/jimgong92/toDoFlux/issues"
   },
   "homepage": "https://github.com/jimgong92/toDoFlux",
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
+  },
   "dependencies": {
     "flux": "^2.0.1",
     "keymirror": "~0.1.0",
@@ -29,9 +35,13 @@
   "devDependencies": {
     "browserify": "^6.2.0",
     "envify": "^3.0.0",
+    "gulp": "^3.8.11",
+    "gulp-html-replace": "^1.4.4",
+    "gulp-load-plugins": "^0.9.0",
     "jest-cli": "~0.1.17",
     "reactify": "^0.15.2",
     "uglify-js": "~2.4.15",
+    "vinyl-source-stream": "^1.1.0",
     "watchify": "^2.1.1"
   }
 }
