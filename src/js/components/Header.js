@@ -1,7 +1,4 @@
 var React = require('react');
-/**
- * Actions
- */
 var TodoActions = require('../actions/TodoActions');
 var TodoTextInput = require('./TodoTextInput');
 
