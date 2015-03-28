@@ -86,3 +86,63 @@ var TodoStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   }
 });
+
+/**
+ * Register callback to handle all updates
+ */
+AppDispatcher.register(function(action){
+  var text;
+
+  switch(action.actionType){
+    case TodoConstants.TODO_CREATE:
+      text = action.text.trim():
+      if (text !== ''){
+        create(text);
+        TodoStore.emitChange();
+      }
+      break;
+
+    case TodoConstants.TODO_TOGGLE_COMPLETE_ALL:
+      if (TodoStore.areAllComplete()){
+        updateAll({complete: false});
+      }
+      else {
+        updateAll({complete: true});
+      }
+      TodoStore.emitChange();
+      break;
+
+    case TodoConstants.TODO_UNDO_COMPLETE:
+      update(action.id, {complete: false});
+      TodoStore.emitChange();
+      break;
+
+    case TodoConstants.TODO_COMPLETE:
+      update(action.id, {complete: true});
+      TodoStore.emitChange();
+      break;
+
+    case TodoConstants.TODO_UPDATE_TEXT:
+      text = action.text.trim();
+      if (text !== ''){
+        update(action.id, {text: text});
+        TodoStore.emitChange();
+      }
+      break;
+
+    case TodoConstants.TODO_DESTROY:
+      destroy(action.id);
+      TodoStore.emitChange();
+      break;
+
+    case TodoConstants.TODO_DESTROY_COMPLETED:
+      destroyCompleted();
+      TodoStore.emitChange();
+      break;
+
+    default:
+      //no op
+  }
+});
+
+module.exports = TodoStore;
