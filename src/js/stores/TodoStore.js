@@ -54,3 +54,35 @@ function destroyCompleted(){
     }
   }
 }
+
+var TodoStore = assign({}, EventEmitter.prototype, {
+  /**
+   * Tests whether all the remaining TODO items are marked as completed
+   */
+  areAllComplete: function(){
+    for (var id in _todos){
+      if (!_todos[id].complete){
+        return false;
+      }
+    }
+    return true;
+  },
+  /**
+   * Get the entire collection of TODOs
+   */
+  getAll: function(){
+    return _todos;
+  },
+
+  emitChange: function(){
+    this.emit(CHANGE_EVENT);
+  },
+
+  addChangeListener: function(callback){
+    this.on(CHANGE_EVENT, callback);
+  },
+
+  removeChangeListener: function(callback){
+    this.removeListener(CHANGE_EVENT, callback);
+  }
+});
