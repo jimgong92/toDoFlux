@@ -1,5 +1,5 @@
 var React = require('react');
-var App = require('./components/TodoApp');
+var TodoApp = require('./components/TodoApp');
 
 React.render(
   <TodoApp />,

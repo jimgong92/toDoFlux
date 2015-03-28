@@ -45,7 +45,7 @@ var TodoTextInput = React.createClass({
         onChange={this._onChange}
         onKeyDown={this._onKeyDown}
         value={this.state.value}
-        autoFocus=true />
+        autoFocus={true} />
     );
   }
 });

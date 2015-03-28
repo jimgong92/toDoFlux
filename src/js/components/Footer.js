@@ -10,7 +10,7 @@ var Footer = React.createClass({
     TodoActions.destroyCompleted();
   },
   render: function(){
-    var allTodos = this.prop.allTodos;
+    var allTodos = this.props.allTodos;
     var total = Object.keys(allTodos).length;
 
     if (total === 0){

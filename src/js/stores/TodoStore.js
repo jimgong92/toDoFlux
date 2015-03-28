@@ -95,7 +95,7 @@ AppDispatcher.register(function(action){
 
   switch(action.actionType){
     case TodoConstants.TODO_CREATE:
-      text = action.text.trim():
+      text = action.text.trim();
       if (text !== ''){
         create(text);
         TodoStore.emitChange();

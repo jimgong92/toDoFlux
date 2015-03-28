@@ -15,7 +15,7 @@ var Header = React.createClass({
         <TodoTextInput 
           id="new-todo"
           placeholder="What needs to be done?"
-          _onSave={this._onSave} />
+          onSave={this._onSave} />
       </header>
     );
   }
