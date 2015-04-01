@@ -23,7 +23,7 @@ var path = {
 /**
  * DEVELOPMENT TASKS
  */
-gulp.task('default', ['devReplace', 'watch']);
+gulp.task('default', ['devReplace', 'watch', 'startDB', 'serve']);
 
 gulp.task('copy', function(){
   gulp.src(path.HTML)
@@ -63,3 +63,12 @@ gulp.task('watch', function(){
     .pipe(gulp.dest(path.DEST_SRC));
 
 });
+gulp.task('serve', function(){
+  plugins.nodemon({
+    script: 'index.js'
+  });
+})
+gulp.task('startDB', function(){
+  return gulp.src('')
+    .pipe(plugins.shell(['mongod']));
+})
