@@ -5,7 +5,10 @@ module.exports = function(app){
    * Get All Todos
    */
   app.get('/api/todos', function(req, res){
-   
+    MongoController.getAllToDos(function(todos){
+      console.log("Successfully retrieved all ToDos");
+      console.log(todos);
+    })
     res.sendStatus(200);
   });
   /** 
@@ -16,7 +19,7 @@ module.exports = function(app){
       text: req.body.text,
       isCompleted: false
     };
-    MongoController.addToDo(req.body, function(){
+    MongoController.addToDo(newToDo, function(){
       console.log("Successfully added ToDo to DB");
     });
     res.sendStatus(201);

@@ -1,14 +1,19 @@
 var ToDo = require('../models/ToDo');
 
 module.exports = {
-  getAllToDos: function(){
+  getAllToDos: function(callback){
     ToDo.find({}, function(err, todos){
-      console.log("Error in Get All ToDos");
-      console.log(err);
+      if (err){
+        console.log("Error in Get All ToDos");
+        console.log(err);
+      }
+      if(callback){
+        callback(todos);
+      }
     });
   },
   getToDo: function(id){
-
+    
   },
   addToDo: function(newToDo, callback){
     ToDo.create(newToDo, function(err, todo){
