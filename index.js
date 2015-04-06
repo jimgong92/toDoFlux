@@ -34,6 +34,11 @@ app.use(session({
 }));
 
 /**
+ * Send routes into router
+ */
+require('./server/router')(app);
+
+/**
  * Express Server Configuration
  */
 app.set("port", process.env.PORT || 5000);
