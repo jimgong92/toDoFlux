@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var TodoConstants = require('../constants/TodoConstants');
 var assign = require('object-assign');
+var $ = require('jquery');
 
 var CHANGE_EVENT = 'change';
 
@@ -10,13 +11,26 @@ var _todos = {};
 /**
  * Create a TODO item
  */
-function create(text){
-  var id = (Number(new Date()) + Math.floor(Math.random() * 9999)).toString(36);
-  _todos[id] = {
-    id: id,
-    complete: false,
-    text: text
-  };
+function create(text, callback){
+  $.ajax({
+    url: window.location.origin + '/api/todos',
+    type: 'POST',
+    data: JSON.stringify({text: text}),
+    contentType: 'application/json',
+    success: function(data){
+      var _id = data._id;
+      _todos[_id] = {
+        _id: _id,
+        isCompleted: false,
+        text: text
+      };
+      callback();
+    },
+    error: function(err){
+      console.error("Error creating TODO");
+      console.error(err);
+    }
+  });
 }
 
 /**
@@ -97,8 +111,10 @@ AppDispatcher.register(function(action){
     case TodoConstants.TODO_CREATE:
       text = action.text.trim();
       if (text !== ''){
-        create(text);
-        TodoStore.emitChange();
+        create(text, success);
+        function success(){
+          TodoStore.emitChange();
+        }
       }
       break;
 

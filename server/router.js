@@ -27,9 +27,9 @@ module.exports = function(app){
       text: req.body.text,
       isCompleted: false
     };
-    MongoController.addToDo(newToDo, function(){
+    MongoController.addToDo(newToDo, function(todo){
       console.log("Successfully added ToDo to DB");
-      res.sendStatus(201);
+      res.send(todo);
     });
   });
   /**
