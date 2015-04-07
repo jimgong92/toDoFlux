@@ -23,7 +23,7 @@ var path = {
 /**
  * DEVELOPMENT TASKS
  */
-gulp.task('default', ['devReplace', 'watch', 'startDB', 'serve']);
+gulp.task('default', ['devReplace', 'watch', 'serve']);
 
 gulp.task('copy', function(){
   gulp.src(path.HTML)
