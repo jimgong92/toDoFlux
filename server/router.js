@@ -5,11 +5,17 @@ module.exports = function(app){
    * Get All Todos
    */
   app.get('/api/todos', function(req, res){
-    MongoController.getAllToDos(function(todos){
+    var _id = req.body._id;
+    if(_id){
+      MongoController.getToDo(_id, successfulGet);
+    }
+    else {
+      MongoController.getAllToDos(successfulGet);
+    }
+    function successfulGet(){
       console.log("Successfully retrieved all ToDos");
-      console.log(todos);
       res.sendStatus(200);
-    })
+    }
   });
   /** 
    * Add ToDo
@@ -28,9 +34,9 @@ module.exports = function(app){
    * Edit ToDo
    */
   app.post('/api/edit', function(req, res){
-    var id = req.body.id,
+    var _id = req.body._id,
         text = req.body.text;
-    MongoController.editToDo(id, text, function(){
+    MongoController.editToDo(_id, text, function(){
       console.log("Successfully edited ToDo in DB");
       res.sendStatus(201);
     });
@@ -39,26 +45,45 @@ module.exports = function(app){
    * Toggle whether ToDo(s) complete
    */
   app.post('/api/toggle', function(req, res){
-    if(req.body.id){
-      MongoController.toggle(req.body.id);
+    var _id = req.body._id,
+        complete = req.body.complete;
+    if(_id){
+      if (complete) {
+        MongoController.toggleComplete(_id, successfulToggle);
+      }
+      else {
+        MongoController.toggleIncomplete(_id, successfulToggle); 
+      }
     }
     else {
-      MongoController.toggleAllComplete();
+      if (complete){
+        MongoController.toggleAllComplete(successfulToggle);
+      }
+      else {
+        MongoController.toggleAllIncomplete(successfulToggle);
+      }
     }
-    res.sendStatus(201);
+    function successfulToggle(){
+      console.log("Successfully toggled");
+      res.sendStatus(201);
+    }
   });
   /**
    * Remove ToDo(s)
    */
   app.post('/api/remove', function(req, res){
+    var _id = req.body._id;
     //Remove single ToDo
-    if(req.body.id){
-      MongoController.remove(req.body.id);
+    if(_id){
+      MongoController.removeToDo(_id, successfulRemove);
     }
     //Remove ToDos marked completed
     else {
-      MongoController.removeAllComplete();
+      MongoController.removeAllComplete(successfulRemove);
     }
-    res.sendStatus(201);
+    function successfulRemove(){
+      console.log("Successful remove");
+      res.sendStatus(201);
+    }
   });
 };

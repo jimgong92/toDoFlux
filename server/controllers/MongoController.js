@@ -15,8 +15,8 @@ module.exports = {
       }
     });
   },
-  getToDo: function(id, callback){
-    ToDo.findOne({_id: id}, function(err, data){
+  getToDo: function(_id, callback){
+    ToDo.findOne({_id: _id}, function(err, data){
       if(err){
         console.log("Error in Get ToDo");
       }
@@ -33,8 +33,8 @@ module.exports = {
       if(callback) callback(data);
     });
   },
-  editToDo: function(id, text, callback){
-    ToDo.update({_id: id}, {text: text}, function(err, data){
+  editToDo: function(_id, text, callback){
+    ToDo.update({_id: _id}, {text: text}, function(err, data){
       if(err){
         console.log("Error in Edit ToDo");
         console.log(err);
@@ -62,8 +62,8 @@ module.exports = {
       if(callback) callback();
     });
   },
-  toggleComplete: function(id, callback){
-    ToDo.update({_id: id}, {isCompleted: true}, function(err, data){
+  toggleComplete: function(_id, callback){
+    ToDo.update({_id: _id}, {isCompleted: true}, function(err, data){
       if (err){
         console.log("Error in toggleComplete");
         console.log(err);
@@ -71,15 +71,15 @@ module.exports = {
       if(callback) callback();
     });
   },
-  toggleIncomplete: function(id, callback){
-    ToDo.update({_id: id}, {isCompleted: false}, function(err, data){
+  toggleIncomplete: function(_id, callback){
+    ToDo.update({_id: _id}, {isCompleted: false}, function(err, data){
       if (err){
         console.log("Error in toggleComplete");
         console.log(err);
       }
       if(callback) callback();
     });
-  }
+  },
   removeAllComplete: function(){
     ToDo.remove({isCompleted: true}, function(err){
       if (err){
@@ -87,8 +87,8 @@ module.exports = {
       }
     })
   },
-  removeToDo: function(id, callback){
-    ToDo.remove({_id: id}, function(err){
+  removeToDo: function(_id, callback){
+    ToDo.remove({_id: _id}, function(err){
       if (err){
         console.log("Error removing ToDo");
       }
