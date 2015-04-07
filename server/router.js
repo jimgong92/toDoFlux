@@ -40,7 +40,7 @@ module.exports = function(app){
         text = req.body.text;
     MongoController.editToDo(_id, text, function(){
       console.log("Successfully edited ToDo in DB");
-      res.sendStatus(201);
+      res.sendStatus(200);
     });
   });
   /**

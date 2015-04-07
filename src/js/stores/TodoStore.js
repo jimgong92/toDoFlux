@@ -11,20 +11,20 @@ var _todos = {};
 /**
  * Create a TODO item
  */
-function create(text, callback){
+function create(text){
   $.ajax({
     url: window.location.origin + '/api/todos',
     type: 'POST',
     data: JSON.stringify({text: text}),
     contentType: 'application/json',
     success: function(data){
-      var _id = data._id;
-      _todos[_id] = {
-        _id: _id,
+      var id = data._id;
+      _todos[id] = {
+        id: id,
         isCompleted: false,
         text: text
       };
-      callback();
+      TodoStore.emitChange();
     },
     error: function(err){
       console.error("Error creating TODO");
@@ -40,6 +40,14 @@ function create(text, callback){
  */
 function update(id, updates){
   _todos[id] = assign({}, _todos[id], updates);
+  //EDIT
+  if (updates.text){
+    edit(id, updates.text);
+  }
+  //TOGGLE COMPLETE
+  else {
+    
+  }
 }
 
 /**
@@ -50,7 +58,25 @@ function updateAll(updates){
     update(id, updates);
   }
 }
-
+function edit(id, text){
+  $.ajax({
+    url: window.location.origin + '/api/edit',
+    type: 'POST',
+    data: JSON.stringify({
+      _id: id,
+      text: text
+    }),
+    contentType: 'application/json',
+    success: function(data){
+      console.log(data);
+      TodoStore.emitChange();
+    },
+    error: function(err){
+      console.error("Error editing TODO");
+      console.error(err);
+    }
+  });
+}
 /**
  * Delete a TODO item
  */
@@ -111,10 +137,7 @@ AppDispatcher.register(function(action){
     case TodoConstants.TODO_CREATE:
       text = action.text.trim();
       if (text !== ''){
-        create(text, success);
-        function success(){
-          TodoStore.emitChange();
-        }
+        create(text);
       }
       break;
 
