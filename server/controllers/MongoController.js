@@ -16,6 +16,13 @@ module.exports = {
     });
   },
   getToDo: function(id, callback){
+    ToDo.findOne({_id: id}, function(err, data){
+      if(err){
+        console.log("Error in Get ToDo");
+      }
+      if(callback) callback();
+    })
+
   },
   addToDo: function(newToDo, callback){
     ToDo.create(newToDo, function(err, data){
@@ -38,14 +45,42 @@ module.exports = {
     });
   },
   toggleAllComplete: function(callback){
+    ToDo.update({}, {isCompleted: true}, function(err, data){
+      if(err){
+        console.log("Error in toggleAllComplete");
+        console.log(err);
+      }
+      if(callback) callback();
+    });
   },
-  toggleComplete: function(id){
+  toggleAllIncomplete: function(callback){
+    ToDo.update({}, {isCompleted: false}, function(err, data){
+      if(err){
+        console.log("Error in toggleAllComplete");
+        console.log(err);
+      }
+      if(callback) callback();
+    });
   },
+  toggleComplete: function(id, callback){
+    if(callback) callback();
+  },
+  toggleIncomplete: function(id, callback){
+
+  }
   removeAllComplete: function(){
-
+    ToDo.remove({isCompleted: true}, function(err){
+      if (err){
+        console.log("Error removing completed ToDo(s)")
+      }
+    })
   },
-  removeToDo: function(id){
-
+  removeToDo: function(id, callback){
+    ToDo.remove({_id: id}, function(err){
+      if (err){
+        console.log("Error removing ToDo");
+      }
+    })
   }
 };
 
