@@ -10,11 +10,33 @@ var _todos = {};
 /**
  * Populate _todos with those in database
  */
-function init(){
+(function init(){
   $.ajax({
-
+    url: window.location.origin + '/api/todos',
+    type: 'GET',
+    contentType: 'application/json',
+    success: function(data){
+      console.log(data);
+      var todo, id, text, isCompleted;
+      for (var i=0; i < data.length; i++){
+        todo = data[i],
+        id = todo._id,
+        text = todo.text,
+        isCompleted = todo.isCompleted;
+        _todos[id] = {
+          id: id,
+          isCompleted: isCompleted,
+          text: text
+        };
+      }
+      TodoStore.emitChange();
+    },
+    error: function(err){
+      console.error("Error creating TODO");
+      console.error(err);
+    }
   });
-}
+})();
 /**
  * Create a TODO item
  */
@@ -93,7 +115,7 @@ function toggle(id, isCompleted){
     type: 'POST',
     data: JSON.stringify({
       _id: id,
-      isCompleted: isCompleted
+      complete: isCompleted
     }),
     contentType: 'application/json',
     success: function(data){

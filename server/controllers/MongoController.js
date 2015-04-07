@@ -69,6 +69,7 @@ module.exports = {
         console.log("Error in toggleComplete");
         console.log(err);
       }
+      console.log(data);
       if(callback) callback();
     });
   },

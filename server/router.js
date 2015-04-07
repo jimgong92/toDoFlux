@@ -15,8 +15,7 @@ module.exports = function(app){
     }
     function successfulGet(todos){
       console.log("Successfully retrieved all ToDos");
-      console.log(todos);
-      res.sendStatus(todos);
+      res.send(todos);
     }
   });
   /** 
@@ -49,6 +48,7 @@ module.exports = function(app){
   app.post('/api/toggle', function(req, res){
     var _id = req.body._id,
         complete = req.body.complete;
+        console.log(req.body);
     if(_id){
       if (complete) {
         MongoController.toggleComplete(_id, successfulToggle);
@@ -67,7 +67,7 @@ module.exports = function(app){
     }
     function successfulToggle(){
       console.log("Successfully toggled");
-      res.sendStatus(201);
+      res.sendStatus(200);
     }
   });
   /**
