@@ -5,16 +5,18 @@ module.exports = function(app){
    * Get All Todos
    */
   app.get('/api/todos', function(req, res){
-    var _id = req.body._id;
+    var _id = req.query._id;
+    console.log(_id);
     if(_id){
       MongoController.getToDo(_id, successfulGet);
     }
     else {
       MongoController.getAllToDos(successfulGet);
     }
-    function successfulGet(){
+    function successfulGet(todos){
       console.log("Successfully retrieved all ToDos");
-      res.sendStatus(200);
+      console.log(todos);
+      res.sendStatus(todos);
     }
   });
   /** 

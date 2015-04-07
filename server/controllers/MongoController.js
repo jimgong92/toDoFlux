@@ -17,10 +17,11 @@ module.exports = {
   },
   getToDo: function(_id, callback){
     ToDo.findOne({_id: _id}, function(err, data){
+      console.log("Single");
       if(err){
         console.log("Error in Get ToDo");
       }
-      if(callback) callback();
+      if(callback) callback(data);
     })
 
   },
