@@ -7,7 +7,14 @@ var $ = require('jquery');
 var CHANGE_EVENT = 'change';
 
 var _todos = {};
+/**
+ * Populate _todos with those in database
+ */
+function init(){
+  $.ajax({
 
+  });
+}
 /**
  * Create a TODO item
  */
@@ -46,7 +53,7 @@ function update(id, updates){
   }
   //TOGGLE COMPLETE
   else {
-    
+    toggle(id, updates.complete);
   }
 }
 
@@ -58,6 +65,9 @@ function updateAll(updates){
     update(id, updates);
   }
 }
+/**
+ * Edit a TODO item
+ */
 function edit(id, text){
   $.ajax({
     url: window.location.origin + '/api/edit',
@@ -65,6 +75,25 @@ function edit(id, text){
     data: JSON.stringify({
       _id: id,
       text: text
+    }),
+    contentType: 'application/json',
+    success: function(data){
+      console.log(data);
+      TodoStore.emitChange();
+    },
+    error: function(err){
+      console.error("Error editing TODO");
+      console.error(err);
+    }
+  });
+}
+function toggle(id, isCompleted){
+  $.ajax({
+    url: window.location.origin + '/api/toggle',
+    type: 'POST',
+    data: JSON.stringify({
+      _id: id,
+      isCompleted: isCompleted
     }),
     contentType: 'application/json',
     success: function(data){
