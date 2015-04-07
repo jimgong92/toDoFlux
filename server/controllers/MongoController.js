@@ -63,10 +63,22 @@ module.exports = {
     });
   },
   toggleComplete: function(id, callback){
-    if(callback) callback();
+    ToDo.update({_id: id}, {isCompleted: true}, function(err, data){
+      if (err){
+        console.log("Error in toggleComplete");
+        console.log(err);
+      }
+      if(callback) callback();
+    });
   },
   toggleIncomplete: function(id, callback){
-
+    ToDo.update({_id: id}, {isCompleted: false}, function(err, data){
+      if (err){
+        console.log("Error in toggleComplete");
+        console.log(err);
+      }
+      if(callback) callback();
+    });
   }
   removeAllComplete: function(){
     ToDo.remove({isCompleted: true}, function(err){
