@@ -17,7 +17,6 @@ module.exports = {
   },
   getToDo: function(_id, callback){
     ToDo.findOne({_id: _id}, function(err, data){
-      console.log("Single");
       if(err){
         console.log("Error in Get ToDo");
       }
@@ -32,6 +31,7 @@ module.exports = {
         console.log(err);
       }
       if(callback) callback(data);
+      peek(data._id);
     });
   },
   editToDo: function(_id, text, callback){
@@ -40,8 +40,6 @@ module.exports = {
         console.log("Error in Edit ToDo");
         console.log(err);
       }
-      console.log("Edited ToDo");
-      console.log(data);
       if(callback) callback();
     });
   },
@@ -69,7 +67,6 @@ module.exports = {
         console.log("Error in toggleComplete");
         console.log(err);
       }
-      console.log(data);
       if(callback) callback();
     });
   },
@@ -108,5 +105,11 @@ function clearDB(){
       console.log("Error clearing database");
       console.log(err);
     }
+    console.log("Cleared Database");
+  });
+}
+function peek(id){
+  ToDo.findOne({_id: id}, function(err, data){
+    console.log(data);
   });
 }

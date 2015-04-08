@@ -17,16 +17,13 @@ var _todos = {};
     contentType: 'application/json',
     success: function(data){
       console.log(data);
-      var todo, id, text, isCompleted;
+      var todo;
       for (var i=0; i < data.length; i++){
         todo = data[i],
-        id = todo._id,
-        text = todo.text,
-        isCompleted = todo.isCompleted;
-        _todos[id] = {
-          id: id,
-          isCompleted: isCompleted,
-          text: text
+        _todos[todo._id] = {
+          id: todo._id,
+          isCompleted: todo.isCompleted,
+          text: todo.text
         };
       }
       TodoStore.emitChange();
@@ -75,7 +72,7 @@ function update(id, updates){
   }
   //TOGGLE COMPLETE
   else {
-    toggle(id, updates.complete);
+    toggle(id, updates.isCompleted);
   }
 }
 
@@ -194,21 +191,21 @@ AppDispatcher.register(function(action){
 
     case TodoConstants.TODO_TOGGLE_COMPLETE_ALL:
       if (TodoStore.areAllComplete()){
-        updateAll({complete: false});
+        updateAll({isCompleted: false});
       }
       else {
-        updateAll({complete: true});
+        updateAll({isCompleted: true});
       }
       TodoStore.emitChange();
       break;
 
     case TodoConstants.TODO_UNDO_COMPLETE:
-      update(action.id, {complete: false});
+      update(action.id, {isCompleted: false});
       TodoStore.emitChange();
       break;
 
     case TodoConstants.TODO_COMPLETE:
-      update(action.id, {complete: true});
+      update(action.id, {isCompleted: true});
       TodoStore.emitChange();
       break;
 

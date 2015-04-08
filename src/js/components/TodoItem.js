@@ -41,7 +41,7 @@ var TodoItem = React.createClass({
     return (
       <li
         className={cx({
-          'completed': todo.complete,
+          'completed': todo.isCompleted,
           'editing': this.state.isEditing
         })}
         key={todo.id}>
@@ -49,7 +49,7 @@ var TodoItem = React.createClass({
           <input
             className="toggle"
             type="checkbox"
-            checked={todo.complete}
+            checked={todo.isCompleted}
             onChange={this._onToggleComplete}/>
           <label onDoubleClick={this._onDoubleClick}>
             {todo.text}

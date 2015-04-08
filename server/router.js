@@ -6,7 +6,6 @@ module.exports = function(app){
    */
   app.get('/api/todos', function(req, res){
     var _id = req.query._id;
-    console.log(_id);
     if(_id){
       MongoController.getToDo(_id, successfulGet);
     }
@@ -48,7 +47,6 @@ module.exports = function(app){
   app.post('/api/toggle', function(req, res){
     var _id = req.body._id,
         complete = req.body.complete;
-        console.log(req.body);
     if(_id){
       if (complete) {
         MongoController.toggleComplete(_id, successfulToggle);

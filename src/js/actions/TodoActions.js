@@ -17,7 +17,7 @@ var TodoActions = {
   },
   toggleComplete: function(todo){
     var id = todo.id;
-    if (todo.complete){
+    if (todo.isCompleted){
       AppDispatcher.dispatch({
         actionType: TodoConstants.TODO_UNDO_COMPLETE,
         id: id

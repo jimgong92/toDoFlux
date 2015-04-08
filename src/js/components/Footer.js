@@ -19,7 +19,7 @@ var Footer = React.createClass({
 
     var completed = 0;
     for (var key in allTodos){
-      if (allTodos[key].complete){
+      if (allTodos[key].isCompleted){
         completed++
       }
     }
