@@ -75,7 +75,7 @@ gulp.task('startDB', function(){
 /**
  * Production tasks
  */
-gulp.task('production', ['replaceHTML']);
+gulp.task('production', ['replaceHTML', 'build']);
 
 gulp.task('replaceHTML', function(){
   gulp.src(path.HTML)
@@ -83,4 +83,14 @@ gulp.task('replaceHTML', function(){
       'js': 'src/' + path.MINIFIED_OUT
     }))
     .pipe(gulp.dest(path.DEST));
+});
+gulp.task('build', function(){
+  browserify({
+    entries: [path.ENTRY_POINT],
+    transform: [reactify]
+  })
+    .bundle()
+    .pipe(source(path.MINIFIED_OUT))
+    .pipe(plugins.streamify(plugins.uglify(path.MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
 });
