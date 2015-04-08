@@ -87,10 +87,12 @@ module.exports = {
     })
   },
   removeToDo: function(_id, callback){
-    ToDo.remove({_id: _id}, function(err){
+    ToDo.remove({_id: _id}, function(err, data){
       if (err){
         console.log("Error removing ToDo");
       }
+      console.log("Removed ToDo");
+      console.log(data.result);
     })
   }
 };

@@ -130,6 +130,22 @@ function toggle(id, isCompleted){
  */
 function destroy(id){
   delete _todos[id];
+  $.ajax({
+    url: window.location.origin + '/api/remove',
+    type: 'POST',
+    data: JSON.stringify({
+      _id: id
+    }),
+    contentType: 'application/json',
+    success: function(data){
+      console.log(data);
+      TodoStore.emitChange();
+    },
+    error: function(err){
+      console.error("Error editing TODO");
+      console.error(err);
+    }
+  });
 }
 
 /**
@@ -137,7 +153,7 @@ function destroy(id){
  */
 function destroyCompleted(){
   for (var id in _todos){
-    if (_todos[id].complete){
+    if (_todos[id].isCompleted){
       destroy(id);
     }
   }
