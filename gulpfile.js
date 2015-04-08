@@ -29,7 +29,6 @@ gulp.task('copy', function(){
   gulp.src(path.HTML)
     .pipe(gulp.dest(path.DEST));
 });
-//TODO: COPY SRC CSS INTO DIST CSS
 gulp.task('copy-css', function(){
   gulp.src(path.CSS)
     .pipe(gulp.dest(path.DEST_CSS));
@@ -72,3 +71,16 @@ gulp.task('startDB', function(){
   return gulp.src('')
     .pipe(plugins.shell(['mongod']));
 })
+
+/**
+ * Production tasks
+ */
+gulp.task('production', ['replaceHTML']);
+
+gulp.task('replaceHTML', function(){
+  gulp.src(path.HTML)
+    .pipe(plugins.htmlReplace({
+      'js': 'src/' + path.MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
